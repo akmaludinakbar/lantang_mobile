@@ -1,58 +1,41 @@
-<ion-view title="home" hide-nav-bar="true" hide-back-button="true" cache-view="true"" id="page1">
+<ion-view title="𝓛𝓪𝓷𝓽𝓪𝓷𝓰" cache-view="true" id="page1">
+    <ion-nav-buttons side="left">
+        <a ng-click="camera()"  class="button button-clear icon ion-ios-camera"></a>
+  </ion-nav-buttons>
   <ion-content padding="false" scroll="false">
-    <div id="home-container12" class="card-scroll">
-      <div id="home-container5">
-        <ion-list id="home-list11">
-          <ion-item class="item-avatar" id="home-list-item6">
-            <h2>aaa</h2>
-            <p>batang</p>
-          </ion-item>
-        </ion-list>
+    <div id="home-container12" class="card-scroll" >
+      <div id="home-container5" ng-repeat="p in post">
+      <ion-item class="item-avatar" id="home-list11" style="    border-bottom: none;">
+        <img ng-src='https://avataaars.io/{{p.user[0].avatar}}'>
+        <h2>{{p.user[0].username}}</h2>
+        <p></p>
+      </ion-item>
         <ion-slides disable-side-menu-drag="" options="{'loop': true}" slider="slider3" delegate-handle="slider3" id="home-slider3" style="width:100%;height:200px;">
-          <ion-slide-page id="home-slide213" style="background:url(&quot;img/avfsZwJT9WGsBj982ul1_kitten1.jpg&quot;) no-repeat center;background-size:cover;"></ion-slide-page>
-          <ion-slide-page id="home-slide214" style="background:url(&quot;img/gHd5vedGQJu4s4qsPQvr_kitten2.jpg&quot;) no-repeat center;background-size:cover;"></ion-slide-page>
-          <ion-slide-page id="home-slide215" style="background:url(&quot;img/WE6rB9dZRTiIWQlP5qsA_kitten3.jpg&quot;) no-repeat center;background-size:cover;"></ion-slide-page>
+          <ion-slide-page id="home-slide213" style="background:url(http://lantang.herokuapp.com/img/{{p.image}}.jpeg) no-repeat center;background-size:cover;"></ion-slide-page>
+          <!-- <ion-slide-page id="home-slide214" style="background:url(&quot;img/gHd5vedGQJu4s4qsPQvr_kitten2.jpg&quot;) no-repeat center;background-size:cover;"></ion-slide-page>
+          <ion-slide-page id="home-slide215" style="background:url(&quot;img/WE6rB9dZRTiIWQlP5qsA_kitten3.jpg&quot;) no-repeat center;background-size:cover;"></ion-slide-page> -->
         </ion-slides>
-        <div id="home-container1" class="left">
-          <div id="home-button-bar2" class="button-bar">
-            <button id="home-button12" class="button button-light button-block icon ion-ios-heart-outline"></button>
-            <button id="home-button13" class="button button-light button-block icon ion-ios-chatbubble-outline"></button>
+        <section style="margin-left: 10px;
+        float: left;
+        width: -webkit-fill-available;
+        margin-top: -20px;">
+          <div style="display: inline-flex;     height: fit-content;">
+             <button  class="button button-light button-block icon ion-ios-heart-outline" style="
+             width: fit-content;"></button>
+              <button class="button button-light button-block icon ion-ios-chatbubble-outline" style="
+              width: fit-content;"></button>
           </div>
-        </div>
-        <section style="margin-left:10px; margin-top:-20px;">
-          <h6>1 Support</h6>
-          <p style="margin-top:-9px;">Komentar</p>
-          <p style="margin-top:-9px; font-size:12px;">adw</p>
+          <h6 ng-if="p.like.length">1 Like</h6>
+          <h6 ng-if="!p.like.length">&nbsp;</h6>
+          <p style="margin-top:-9px; font-size:13px;">{{p.description}}</p>
+          <!-- <p style="margin-top:-9px;">Komentar</p>
+          <p style="margin-top:-9px; font-size:12px;">adw</p> -->
           <p></p>
         </section>
       </div>
-      <div id="home-container14">
-        <ion-list id="home-list13">
-          <ion-item class="item-avatar" id="home-list-item8">
-            <h2>aaa</h2>
-            <p>batang</p>
-          </ion-item>
-        </ion-list>
-        <ion-slides disable-side-menu-drag="" options="{'loop': true}" slider="slider5" delegate-handle="slider5" id="home-slider5" style="width:100%;height:200px;">
-          <ion-slide-page id="home-slide24" style="background:url(&quot;img/avfsZwJT9WGsBj982ul1_kitten1.jpg&quot;) no-repeat center;background-size:cover;"></ion-slide-page>
-          <ion-slide-page id="home-slide25" style="background:url(&quot;img/gHd5vedGQJu4s4qsPQvr_kitten2.jpg&quot;) no-repeat center;background-size:cover;"></ion-slide-page>
-          <ion-slide-page id="home-slide26" style="background:url(&quot;img/WE6rB9dZRTiIWQlP5qsA_kitten3.jpg&quot;) no-repeat center;background-size:cover;"></ion-slide-page>
-        </ion-slides>
-        <div id="home-container13" class="left">
-          <div id="home-button-bar4" class="button-bar">
-            <button id="home-button11" class="button button-light button-block icon ion-ios-heart-outline"></button>
-            <button id="home-button14" class="button button-light button-block icon ion-ios-chatbubble-outline"></button>
-          </div>
-        </div>
-        <section style="margin-left:10px; margin-top:-20px;">
-          <h6>1 Support</h6>
-          <p style="margin-top:-9px;">Komentar</p>
-          <p style="margin-top:-9px; font-size:12px;">adw</p>
-          <p></p>
-        </section>
-      </div>
-      <div class="spacer" style="height: 150px;"></div>
+      <div class="spacer" style="height: 200px;"></div>
     </div>
+    
     <div id="home-button-bar1" class="button-bar footer shadow">
       <button id="home-button4" class="button button-light button-block icon ion-ios-home"></button>
       <a ui-sref="laporkan()" id="home-button8" class="button button-light button-block icon ion-android-add-circle"></a>

@@ -1,20 +1,156 @@
 var url = 'https://lantang.herokuapp.com'
 var post = {}
+var user = {}
+
+var resizer = function(base64, maxWidth, maxHeight){
+
+
+	// Max size for thumbnail
+	  if(typeof(maxWidth) === 'undefined')  maxWidth = 500;
+	  if(typeof(maxHeight) === 'undefined')  maxHeight = 500;
+	
+	  // Create and initialize two canvas
+	  var canvas = document.createElement("canvas");
+	  var ctx = canvas.getContext("2d");
+	  var canvasCopy = document.createElement("canvas");
+	  var copyContext = canvasCopy.getContext("2d");
+	
+	  // Create original image
+	  var img = new Image();
+	  img.src = base64;
+	
+	  // Determine new ratio based on max size
+	  var ratio = 1;
+	  if(img.width > maxWidth)
+		ratio = maxWidth / img.width;
+	  else if(img.height > maxHeight)
+		ratio = maxHeight / img.height;
+	
+	  // Draw original image in second canvas
+	  canvasCopy.width = img.width;
+	  canvasCopy.height = img.height;
+	  copyContext.drawImage(img, 0, 0);
+	
+	  // Copy and resize second canvas to first canvas
+	  canvas.width = img.width * ratio;
+	  canvas.height = img.height * ratio;
+	  ctx.drawImage(canvasCopy, 0, 0, canvasCopy.width, canvasCopy.height, 0, 0, canvas.width, canvas.height);
+	
+	  return canvas.toDataURL();
+	
+	
+	
+	}
+
+var load = function(a,b) {
+	if(post.image){
+		document.getElementById(a).style.backgroundImage = 'url(' + post.image + ')'
+		document.getElementById(b).style.color = "transparent"
+	}
+
+}
 
 
 angular.module('app.controllers', [])
 
-.controller('homeCtrl', ['$scope', '$stateParams', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
+.controller('homeCtrl', ['$scope', '$stateParams','$http', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
 // You can include any angular dependencies as parameters for this function
 // TIP: Access Route Parameters for your page via $stateParams.parameterName
-function ($scope, $stateParams) {
-	
+function ($scope, $stateParams,$http) {
 
+			
+	user.avatar = localStorage.getItem("avatar")
+	user.username = localStorage.getItem("username")
+	user.email = localStorage.getItem("email")
+	user.id = localStorage.getItem("id")
+	
+	$scope.user = user;
+	$scope.post = []
+
+	$scope.decode = function(s){
+		return decodeURIComponent(s)
+	}
+	
 	if(localStorage.getItem("id")==undefined)
 	{
 		location.href = '/#/login';
 	}
 
+	$scope.$on('$ionicView.enter', function () { 
+		$scope.load()
+	});
+
+
+	$scope.getDetailUser = function(index) {
+		
+		$http({
+			method: "GET",
+			url: url+"/v1/user/"+$scope.post[index].id_user
+		})
+		.success(function(data) {
+		
+			$scope.post[index].user = data
+		})
+		.error(function (errResponse, status) {
+			$ionicPopup.alert({
+					title: 'Tidak tersambung'
+			});
+		});
+	}
+	$scope.camera = function(){
+
+
+		function onSuccess(imageData) {
+		  
+			post.image =  resizer("data:image/jpeg;base64," + imageData);
+
+			
+			
+			setTimeout(function(){
+				window.location = "/#/laporkan2"
+			},0)
+		}
+
+		function onFail(message) {
+		    alert('Failed because: ' + message);
+		}
+				/**
+		 * Warning: Using DATA_URL is not recommended! The DATA_URL destination
+		 * type is very memory intensive, even with a low quality setting. Using it
+		 * can result in out of memory errors and application crashes. Use FILE_URI
+		 * or NATIVE_URI instead.
+		 */
+
+		 console.log("camera clicked")
+		navigator.camera.getPicture(onSuccess, onFail, { quality: 25,
+		    destinationType: Camera.DestinationType.DATA_URL
+		});
+	}
+
+
+
+	$scope.load = function(){
+		
+		$http({
+			method: "GET",
+			url: url+"/v1/post/"
+		})
+		.success(function(data) {
+			$scope.post = data
+			console.log(data)
+			for(x in $scope.post){
+				$scope.getDetailUser(x)
+			}
+		})
+		.error(function (errResponse, status) {
+		$ionicPopup.alert({
+				title: 'Tidak tersambung'
+		});
+		});
+	}
+
+	$scope.load()
+	
 
 }])
 
@@ -31,6 +167,7 @@ function ($scope, $stateParams) {
 
 	$scope.requestAuthorization = function () {
 
+		if(cordova.plugins)
 		cordova.plugins.photoLibrary.requestAuthorization(
 		  function () {
 			// Retry
@@ -84,9 +221,12 @@ function ($scope, $stateParams) {
 
 
 		function onSuccess(imageData) {
-		    var image = document.getElementById('myImage');
-		    image.src = "data:image/jpeg;base64," + imageData;
-		    post.image = image.src
+		  
+			post.image =  "data:image/jpeg;base64," + imageData;
+			
+			setTimeout(function(){
+				window.location = "/#/laporkan2"
+			},0)
 		}
 
 		function onFail(message) {
@@ -103,9 +243,6 @@ function ($scope, $stateParams) {
 		navigator.camera.getPicture(onSuccess, onFail, { quality: 25,
 		    destinationType: Camera.DestinationType.DATA_URL
 		});
-
-		window.location = "/#/laporkan2"
-
 	}
 
 
@@ -151,9 +288,16 @@ function ($scope, $stateParams,$http,$ionicPopup) {
 	scope=$scope;
 	$scope.user ={};
 
+
 	if(localStorage.getItem("id"))
 	{
-		location.href = '/#/home';
+		if(localStorage.getItem("role")==0){
+			location.href = '/#/home';
+		}
+		else if(localStorage.getItem("role")==1){
+			location.href = '/#/adminhome';
+		}
+	
 	}
 
 	$scope.login = function(){
@@ -164,9 +308,16 @@ function ($scope, $stateParams,$http,$ionicPopup) {
 	    })
 	    .success(function(data) {
 	    	console.log(data)
-	      localStorage.setItem("id",data.data.id)
-	      localStorage.setItem("email",data.data.id)
-	      location.href = '/#/home';
+		  localStorage.setItem("id",data.data.id)
+		  localStorage.setItem("username",data.data.username)
+		  localStorage.setItem("avatar",data.data.avatar)
+		  localStorage.setItem("email",data.data.id)
+		  localStorage.setItem("role",data.data.role)
+	
+		  if(data.message=="login user")
+			  location.href = '/#/home'
+		  else if(data.message=="login admin")
+		      location.href = '/#/adminhome'
 	    })
 	    .error(function (errResponse, status) {
 	       $ionicPopup.alert({
@@ -348,19 +499,44 @@ function ($scope, $stateParams,$http,$ionicPopup) {
 // TIP: Access Route Parameters for your page via $stateParams.parameterName
 function ($scope, $stateParams) {
 
+    $scope.$on('$ionicView.enter', function () { 
+		load('myImage','icon-gambar')
+	});
+
 }])
    
-.controller('laporkan3Ctrl', ['$scope', '$stateParams', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
+.controller('laporkan3Ctrl', ['$scope', '$stateParams','$http', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
 // You can include any angular dependencies as parameters for this function
 // TIP: Access Route Parameters for your page via $stateParams.parameterName
-function ($scope, $stateParams) {
-
+function ($scope, $stateParams,$http) {
+	
 	$scope.post = post;
 
-	$scope.submit = function(){
-		post.isi = document.getElementById("isi").value 
-	}
+	$scope.$on('$ionicView.enter', function () { 
+		$scope.post = post;
+		load('myImage2','icon-gambar2')
+	});
 
+	$scope.submit = function(){
+		post.description = document.getElementById("isi").value
+		post.id_user = localStorage.getItem("id")
+
+		console.log(post)
+		$http({
+	        method: "POST",
+	        url: url+"/v1/post/add",
+	        data: JSON.stringify(post)
+	    })
+	    .success(function(data) {
+	       location.href = '/#/home';
+	    })
+	    .error(function (errResponse, status) {
+	       $ionicPopup.alert({
+	            title: 'Terjadi kesalahan, coba kembali'
+	       });
+	    });
+	}
+	
 }])
    
 .controller('lapokan4Ctrl', ['$scope', '$stateParams', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
@@ -395,11 +571,48 @@ function ($scope, $stateParams) {
 
 }])
    
-.controller('profilCtrl', ['$scope', '$stateParams', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
+.controller('profilCtrl', ['$scope', '$stateParams','$http','$ionicPopup', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
 // You can include any angular dependencies as parameters for this function
 // TIP: Access Route Parameters for your page via $stateParams.parameterName
-function ($scope, $stateParams) {
+function ($scope, $stateParams,$http,$ionicPopup) {
 
+
+				
+	user.avatar = localStorage.getItem("avatar")
+	user.username = localStorage.getItem("username")
+	user.email = localStorage.getItem("email")
+	user.id = localStorage.getItem("id")
+	
+	$scope.user = user;
+
+	$scope.post = []
+
+
+	
+	$scope.$on('$ionicView.enter', function () { 
+		$scope.load()
+	});
+
+	$scope.load = function(){
+		
+		$http({
+			method: "GET",
+			url: url+"/v1/post_user/"+user.id
+		})
+		.success(function(data) {
+
+			console.log(data)
+			$scope.post = data
+		
+		})
+		.error(function (errResponse, status) {
+		$ionicPopup.alert({
+				title: 'Tidak tersambung'
+		});
+		});
+	}
+
+	$scope.load()
 
 }])
    

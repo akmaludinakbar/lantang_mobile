@@ -2,15 +2,15 @@
   <ion-content padding="false" scroll="false" class="has-header">
     <div class="list borderprofil">
 
-      <table class="marginleft10 responsivetable">
+      <table class="marginleft10 responsivetable" style="    margin: 10px;">
         <tbody>
           <tr>
             <td rowspan="3">
-              <img src="/img/avatar-img.png" class="responsive" style=" border-radius: 50pc; ;">
+              <img src="https://avataaars.io/{{user.avatar}}" class="responsive" style=" border-radius: 50pc; ;">
             </td>
-            <td>1</td>
-            <td>2</td>
-            <td>3</td>
+            <td>{{post.length}}</td>
+            <td>0</td>
+            <td>0</td>
           </tr>
           <tr>
             <td>Menunggu</td>
@@ -27,35 +27,43 @@ padding-left:20px;">
             </td>
           </tr>
           <tr>
-            <td>nama</td>
+            <td>{{user.username}}</td>
           </tr>
         </tbody>
       </table>
     </div>
-    <h4 id="profil-heading2" style="color:#000000;" class="marginleft10 marginright10">Laporan</h4>
-    <div id="profil-container10" class="marginleft10 marginright10 menu-container shadow radius10 margintop10">
-      <a ui-sref="menu.namaToko">
-        <div style="background: url(&quot;http://cdn2.tstatic.net/tribunnews/foto/bank/images/kedai-awug-cibeunying_20170719_212018.jpg&quot;) center center / cover no-repeat; width: 70px;margin: 0   px; line-height: 70px;  background-color: rgb(232, 235, 239); text-align: center;  border-top-left-radius: 10px;
-   border-top-right-radius: 10px;">
-          &lt;
+    <div id="home-container12" class="card-scroll" >
+        <div id="home-container5" ng-repeat="p in post">
+        <ion-item class="item-avatar" id="home-list11" style="    border-bottom: none;">
+          <img ng-src='https://avataaars.io/{{p.user[0].avatar}}'>
+          <h2>{{p.user[0].username}}</h2>
+          <p></p>
+        </ion-item>
+          <ion-slides disable-side-menu-drag="" options="{'loop': true}" slider="slider3" delegate-handle="slider3" id="home-slider3" style="width:100%;height:200px;">
+            <ion-slide-page id="home-slide213" style="background:url(http://lantang.herokuapp.com/img/{{p.image}}.jpeg) no-repeat center;background-size:cover;"></ion-slide-page>
+            <!-- <ion-slide-page id="home-slide214" style="background:url(&quot;img/gHd5vedGQJu4s4qsPQvr_kitten2.jpg&quot;) no-repeat center;background-size:cover;"></ion-slide-page>
+            <ion-slide-page id="home-slide215" style="background:url(&quot;img/WE6rB9dZRTiIWQlP5qsA_kitten3.jpg&quot;) no-repeat center;background-size:cover;"></ion-slide-page> -->
+          </ion-slides>
+          <section style="margin-left: 10px;
+          float: left;
+          width: -webkit-fill-available;
+          margin-top: -20px;">
+            <div style="display: inline-flex;     height: fit-content;">
+               <button  class="button button-light button-block icon ion-ios-heart-outline" style="
+               width: fit-content;"></button>
+                <button class="button button-light button-block icon ion-ios-chatbubble-outline" style="
+                width: fit-content;"></button>
+            </div>
+            <h6 ng-if="p.like.length">1 Like</h6>
+            <h6 ng-if="!p.like.length">&nbsp;</h6>
+            <p style="margin-top:-9px; font-size:13px;">{{p.description}}</p>
+            <!-- <p style="margin-top:-9px;">Komentar</p>
+            <p style="margin-top:-9px; font-size:12px;">adw</p> -->
+            <p></p>
+          </section>
         </div>
-      </a>
-      <div>
-        <a ui-sref="menu.namaToko">
-          <div style="width: 130px;">
-            <center style="
-    width: 70px;
-">
-              <p>
-                <b style=" margin-left:5px;">Selesai</b>
-              </p>
-            </center>
-
-          </div>
-        </a>
-        <a></a>
+        <div class="spacer" style="height: 200px;"></div>
       </div>
-    </div>
     <div id="profil-button-bar6" class="button-bar footer shadow">
       <a ui-sref="home()" id="profil-button20" class="button button-light button-block icon ion-android-home"></a>
       <a ui-sref="laporkan()" id="profil-button30" class="button button-light button-block icon ion-android-add-circle"></a>

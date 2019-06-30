@@ -1,10 +1,16 @@
-<ion-view title="{{post.category}}" id="page4">
+<ion-view title="{{post.category}}" id="page4" >
   <ion-nav-buttons side="left" scroll="false" class="has-header">
     <button class="button button-icon icon ion-earth"></button>
   </ion-nav-buttons>
   <ion-content padding="false" scroll="false" class="has-header">
-    <div style="margin: 0px; line-height: 250px; background-color: rgb(232, 235, 239); text-align: center;">
-      <i class="icon ion-image" style="font-size: 64px; color: rgb(136, 136, 136); vertical-align: middle;"></i>
+    <div id="myImage2" style="margin: 0px; line-height: 250px; background-color: rgb(232, 235, 239); text-align: center;    margin: 0px;
+    line-height: 250px;
+    background-color: rgb(232, 235, 239);
+    text-align: center;
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;">
+      <i id="icon-gambar2" class="icon ion-image" style="font-size: 64px; color: rgb(136, 136, 136); vertical-align: middle;"></i>
     </div>
     <div class="spacer" style="height: 10px;"></div>
     <div id="laporkan3-markdown2" class="show-list-numbers-and-dots marginleft10 marginright10">
@@ -12,7 +18,7 @@
     </div>
     <ion-list id="laporkan3-list15">
       <ion-item class="item-icon-left item-icon-right" id="laporkan3-list-item9" ui-sref="laporkan2()">
-        <i class="icon ion-earth"></i>Pencemaran Lingungan
+        <i class="icon ion-earth"></i> {{post.category}}
         <i class="icon ion-android-arrow-dropright"></i>
       </ion-item>
     </ion-list>
