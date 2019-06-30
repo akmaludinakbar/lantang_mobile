@@ -1,0 +1,19 @@
+{
+  "name": "LANTANG",
+  "type": "ionic1",
+  "integrations": {
+    "cordova": {},
+    "gulp": {}
+  },
+  "watchPatterns": [
+    "scss/**/*",
+    "www/**/*",
+    "!www/lib/**/*",
+    "!www/**/*.map"
+  ],
+  "app_id": "",
+  "gulpStartupTasks": [
+    "sass",
+    "watch"
+  ]
+}

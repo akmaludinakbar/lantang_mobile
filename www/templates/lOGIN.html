@@ -1,0 +1,34 @@
+<ion-view title="LOGIN" hide-nav-bar="true" hide-back-button="true" cache-view="false" nav-transition="none" id="page4">
+  <ion-nav-buttons side="left">
+    <button class="button button-icon icon No Icon"></button>
+  </ion-nav-buttons>
+  <ion-nav-buttons side="right">
+    <button class="button button-light icon ion-android-arrow-forward"></button>
+  </ion-nav-buttons>
+  <ion-content padding="true" style="background: #28a54c;" class="manual-ios-statusbar-padding">
+    <form id="lOGIN-form1" class="list">
+      <div class="logo">
+        <img src="img/Kabupaten_Batang.png" style="display: block; width: auto; height: 20vh; margin-left: auto; margin-right: auto;">
+      </div>
+      <h1 id="lOGIN-heading3" style="color:#FFFFFF;font-weight:600;text-align:center;">LANTANG</h1>
+      <h5 id="lOGIN-heading4" style="color:#000000;font-weight:300;text-align:center;">LAPORKAN PELAYANAN PUBLIK BATANG</h5>
+      <ion-list id="lOGIN-list2">
+        <label class="item item-input item-floating-label bl background-black no-border border-bottom-white p10" id="lOGIN-input1">
+          <span class="input-label">Email</span>
+          <input type="email" placeholder="Email">
+        </label>
+        <label class="item item-input item-floating-label bl background-black no-border p10" id="lOGIN-input2">
+          <span class="input-label">Password</span>
+          <input type="password" placeholder="Password">
+        </label>
+      </ion-list>
+      <div id="lOGIN-container1" class="p10">
+        <a ui-sref="menu.pendaftaran">
+          <p style="color:black;float:right">Belum punya akun?</p>
+        </a>
+        <a ng-click="login()" id="lOGIN-button1" style="border-radius:0px 0px 0px 0px;" class="button button-stable button-block">MASUK</a>
+        <button id="lOGIN-button45" style="border-radius:0px 0px 0px 0px;" class="button button-balanced button-block">LOGIN LEWAT GOOGLE</button>
+      </div>
+    </form>
+  </ion-content>
+</ion-view>
