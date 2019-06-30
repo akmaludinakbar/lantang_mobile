@@ -1,21 +1,31 @@
-<ion-view title="Pendaftaran" id="page19">
+<ion-view title="Pendaftaran" hide-back-button="true" cache-view="true" nav-transition="true"  id="page19">
+    <ion-nav-buttons side="left">
+        <a ui-sref="lOGIN"  class="button button-light icon ion-android-arrow-back"></a>
+  </ion-nav-buttons>
+  <ion-nav-buttons side="right">
+
+  </ion-nav-buttons>
   <ion-content padding="true" class="has-header">
     <form id="pendaftaran-form10" class="list">
       <ion-list id="pendaftaran-list16">
         <label class="item item-input" id="pendaftaran-input8">
-          <span class="input-label">Name</span>
-          <input type="text" placeholder="">
+          
+          <input type="text" placeholder="Username" ng-model="user.username">
         </label>
         <label class="item item-input" id="pendaftaran-input9">
-          <span class="input-label">Email</span>
-          <input type="email" placeholder="">
+          
+          <input type="email" placeholder="Email" ng-model="user.email">
         </label>
         <label class="item item-input" id="pendaftaran-input10">
-          <span class="input-label">Password</span>
-          <input type="text" placeholder="">
+
+          <input type="text" placeholder="Kata Sandi" ng-model="user.password">
+        </label>
+         <label class="item item-input" id="pendaftaran-input10">
+          
+          <input type="text" placeholder="Konfirmasi Kata Sandi" ng-model="user.cpassword">
         </label>
       </ion-list>
-      <button id="pendaftaran-button25" class="button button-balanced button-block">Daftar</button>
+      <button ng-click="register()" id="pendaftaran-button25" class="button button-balanced button-block">Daftar</button>
     </form>
   </ion-content>
 </ion-view>

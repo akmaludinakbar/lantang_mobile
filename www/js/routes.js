@@ -7,16 +7,19 @@ angular.module('app.routes', [])
   // Set up the various states which the app can be in.
   // Each state's controller can be found in controllers.js
   $stateProvider
-    
-
-      .state('menu.bLONTANG', {
-    url: '/home',
+   .state('menu.bLONTANG', {
+    url: '/blontang',
     views: {
       'side-menu21': {
         templateUrl: 'templates/bLONTANG.html',
         controller: 'bLONTANGCtrl'
       }
     }
+  })
+  .state('home', {
+    url: '/home',
+    templateUrl: 'templates/home.html',
+    controller: 'homeCtrl'
   })
 
   .state('menu.pesanan', {
@@ -167,6 +170,83 @@ angular.module('app.routes', [])
         controller: 'pendaftaranCtrl'
       }
     }
+  })
+   .state('laporkan', {
+    url: '/laporkan',
+    templateUrl: 'templates/laporkan.html',
+    controller: 'laporkanCtrl'
+  })
+
+  .state('laporkan2', {
+    url: '/laporkan2',
+    templateUrl: 'templates/laporkan2.html',
+    controller: 'laporkan2Ctrl'
+  })
+
+  .state('laporkan3', {
+    url: '/laporkan3',
+    templateUrl: 'templates/laporkan3.html',
+    controller: 'laporkan3Ctrl'
+  })
+
+  .state('lapokan4', {
+    url: '/laporkan4',
+    templateUrl: 'templates/lapokan4.html',
+    controller: 'lapokan4Ctrl'
+  })
+
+  .state('ulasBisnis', {
+    url: '/swasta',
+    templateUrl: 'templates/ulasBisnis.html',
+    controller: 'ulasBisnisCtrl'
+  })
+
+  .state('review', {
+    url: '/review',
+    templateUrl: 'templates/review.html',
+    controller: 'reviewCtrl'
+  })
+
+  .state('pilihFoto', {
+    url: '/pilihfoto',
+    templateUrl: 'templates/pilihFoto.html',
+    controller: 'pilihFotoCtrl'
+  })
+
+  .state('profil', {
+    url: '/profil',
+    templateUrl: 'templates/profil.html',
+    controller: 'profilCtrl'
+  })
+
+  .state('profilDetaile', {
+    url: '/profildetaile',
+    templateUrl: 'templates/profilDetaile.html',
+    controller: 'profilDetaileCtrl'
+  })
+
+  .state('admin', {
+    url: '/adminhome',
+    templateUrl: 'templates/admin.html',
+    controller: 'adminCtrl'
+  })
+
+  .state('laporan', {
+    url: '/laporanadmin',
+    templateUrl: 'templates/laporan.html',
+    controller: 'laporanCtrl'
+  })
+
+  .state('page', {
+    url: '/Admindetail',
+    templateUrl: 'templates/page.html',
+    controller: 'pageCtrl'
+  })
+
+  .state('page2', {
+    url: '/kirimtanggapan',
+    templateUrl: 'templates/page2.html',
+    controller: 'page2Ctrl'
   })
 
 $urlRouterProvider.otherwise('/login')

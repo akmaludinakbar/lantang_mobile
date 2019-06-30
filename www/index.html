@@ -6,6 +6,7 @@
     <title></title>
 
     
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     
     <script src="lib/ionic/js/ionic.bundle.js"></script>
 
@@ -19,6 +20,178 @@
     <link href="css/ionic.app.css" rel="stylesheet">
 
     <style type="text/css">
+      .footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  margin: 0 !important;
+  z-index: 999;
+}
+
+.shadow {
+  -webkit-box-shadow: 0px -8px 7px -11px rgba(0,0,0,0.75);
+  -moz-box-shadow: 0px -8px 7px -11px rgba(0,0,0,0.75);
+  box-shadow: 0px -8px 7px -11px rgba(0,0,0,0.75);
+}
+
+.font {
+  font-size: 11px;
+}
+
+.left {
+  margin-right: 65%;
+}
+
+.card-scroll {
+  overflow-y: scroll;
+  height: 100vh;
+  margin: 0;
+}
+
+.radius500 {
+  border-radius: 500px;
+}
+
+.marginleft50 {
+  margin-left: 30%;
+}
+
+.marginleft10 {
+  margin-left: 10px;
+}
+
+.padding20p {
+  padding-left: 30%;
+}
+
+.button-container {
+  width: 80px;
+  height: 90px;
+  float: left;
+  margin: 10px;
+  text-align: center;
+}
+
+.containerbg {
+  background-image: url("https: //i.ytimg.com/vi/eDbJCI6gRiM/maxresdefault.jpg");
+}
+
+.bg {
+  background-color: #F5F5F5;
+}
+
+.white {
+  background-color: white;
+}
+
+.shadow2 {
+  -webkit-box-shadow: 0px 1px 7px -2px rgba(0,0,0,0.75);
+  -moz-box-shadow: 0px 1px 7px -2px rgba(0,0,0,0.75);
+  box-shadow: 0px 1px 7px -2px rgba(0,0,0,0.75);
+}
+
+.serch {
+  border-radius: 10px;
+  margin-left: 20px;
+  height: 40px;
+  margin-right: 20px;
+}
+
+.pilihfoto {
+  line-height: 125px !important;
+  margin: 4px;
+}
+
+.menuswasta {
+  padding-top: 9%;
+  margin-left: -15% !important;
+  color: grey;
+}
+
+.iconswasta {
+  max-height: 50px !important;
+  max-width: 50px !important;
+}
+
+.margin10 {
+  margin: 10px;
+}
+
+.borderswasta {
+  min-height: 70px;
+  border: none;
+}
+
+.border {
+  border-style: solid !important;
+  border-color: grey !important;
+  border-width: 2px !important;
+}
+
+.borderprofil {
+  border-bottom: 1px solid;
+  border-color: grey;
+}
+
+.left {
+  float: left !important;
+}
+
+.right {
+  float: right !important;
+}
+
+.responsive {
+  width: 100%;
+  height: auto;
+  max-height: 65px !important;
+  max-width: 65px !important;
+}
+
+thead, tbody, tfoot {
+  vertical-align: middle}
+/* add this rule*/
+td, th, tr {
+  vertical-align: inherit;
+  text-align: center;
+}
+
+.responsivetable {
+  table-layout: fixed;
+  width: 95%;
+}
+
+.circle {
+  width: 40vw;
+  height: 40vw;
+  border-radius: 50pc !important;
+  border: 20px outset  rgba(73,155,234,1) !important;
+}
+
+.menu-container {
+  width: 70px;
+  height: 70px;
+  float: left;
+}
+
+.hero-text button {
+  border: none;
+  outline: 0;
+  display: inline-block;
+  padding: 10px 25px;
+  color: black;
+  background-color: #ddd;
+  text-align: center;
+  cursor: pointer;
+  width: 100%;
+}
+
+.hero-text button: hover {
+  background-color: #555;
+  color: white;
+}
+
+
       .platform-ios .manual-ios-statusbar-padding{
         padding-top:20px;
       }
@@ -62,7 +235,7 @@
   <body ng-app="app" animation="slide-left-right-ios7">
   <div>
   <div>
-    <ion-nav-bar class="bar-balanced">
+    <ion-nav-bar class="bar-stable" >
       <ion-nav-back-button></ion-nav-back-button>
     </ion-nav-bar>
     <ion-nav-view></ion-nav-view>
