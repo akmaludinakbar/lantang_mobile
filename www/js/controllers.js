@@ -783,7 +783,7 @@ function ($scope, $stateParams,$http,$ionicPopup) {
 		
 		lapor = l;
 		localStorage.setItem("idlapor",lapor._id)
-		localStorage.setItem("glapor",lapor.image)
+		localStorage.setItem("glapor",JSON.stringify(lapor.image))
 		localStorage.setItem("klapor",lapor.description)
 		window.location = "/#/Admindetail"
 	}
@@ -961,7 +961,7 @@ function ($scope, $stateParams, $ionicPopup,$http) {
 	
 	$scope.$on('$ionicView.enter', function () {
 		$scope.lapor = lapor;
-		$scope.lapor.image = 	localStorage.getItem("glapor")
+		$scope.lapor.image = 	JSON.parse(localStorage.getItem("glapor"));
 		$scope.lapor.description = 	localStorage.getItem("klapor");
 	});
 
