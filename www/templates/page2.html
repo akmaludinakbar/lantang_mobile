@@ -1,15 +1,22 @@
-<ion-view title="Page" id="page14">
+<ion-view title="Bukti Telah Selesai" id="page14">
   <ion-content padding="false" scroll="false" class="has-header">
-    <div style="margin: 0px; line-height: 250px; background-color: rgb(232, 235, 239); text-align: center;">
-      <i class="icon ion-image" style="font-size: 64px; color: rgb(136, 136, 136); vertical-align: middle;"></i>
-    </div>
+      <div id="myImage3" style="margin: 0px; line-height: 250px; background-color: rgb(232, 235, 239); text-align: center;    margin: 0px;
+      line-height: 250px;
+      background-color: rgb(232, 235, 239);
+      text-align: center;
+      background-position: center;
+      background-size: contain;
+      background-repeat: no-repeat;">
+        <i id="icon-gambar3" class="icon ion-image" style="font-size: 64px; color: rgb(136, 136, 136); vertical-align: middle;"></i>
+      </div>
     <div id="page2-markdown16" class="show-list-numbers-and-dots">
-      <p style="color:#000000;">Upload Foto...</p>
+      <button ng-click="camera()"  class="button  button-block icon ion-ios-camera"> Upload Foto...</button>
     </div>
     <form id="page2-form7" class="list">
-      <label class="item item-input" id="page2-textarea4">
-        <span class="input-label"></span><textarea placeholder="Keterangan"></textarea></label>
+      <label class="item item-input" id="page2-textarea4"></label>
+        <span class="input-label"></span><textarea id="isi" placeholder="Keterangan"></textarea></label>
     </form>
-    <a ui-sref="laporan()" id="page2-button64" class="button button-positive button-block">Upload Tanggapan</a>
+    
+    <a ng-click="upload()" id="page2-button64" class="button button-positive button-block">Upload Tanggapan</a>
   </ion-content>
 </ion-view>

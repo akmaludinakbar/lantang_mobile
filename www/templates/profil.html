@@ -8,9 +8,9 @@
             <td rowspan="3">
               <img src="https://avataaars.io/{{user.avatar}}" class="responsive" style=" border-radius: 50pc; ;">
             </td>
-            <td>{{post.length}}</td>
-            <td>0</td>
-            <td>0</td>
+            <td>{{getStatus('Menunggu')}}</td>
+            <td>{{getStatus('Diproses')}}</td>
+            <td>{{getStatus('Selesai')}}</td>
           </tr>
           <tr>
             <td>Menunggu</td>
@@ -34,35 +34,40 @@ padding-left:20px;">
     </div>
     <div id="home-container12" class="card-scroll" >
         <div id="home-container5" ng-repeat="p in post">
-        <ion-item class="item-avatar" id="home-list11" style="    border-bottom: none;">
-          <img ng-src='https://avataaars.io/{{p.user[0].avatar}}'>
-          <h2>{{p.user[0].username}}</h2>
-          <p></p>
-        </ion-item>
-          <ion-slides disable-side-menu-drag="" options="{'loop': true}" slider="slider3" delegate-handle="slider3" id="home-slider3" style="width:100%;height:200px;">
-            <ion-slide-page id="home-slide213" style="background:url(http://lantang.herokuapp.com/img/{{p.image}}.jpeg) no-repeat center;background-size:cover;"></ion-slide-page>
-            <!-- <ion-slide-page id="home-slide214" style="background:url(&quot;img/gHd5vedGQJu4s4qsPQvr_kitten2.jpg&quot;) no-repeat center;background-size:cover;"></ion-slide-page>
-            <ion-slide-page id="home-slide215" style="background:url(&quot;img/WE6rB9dZRTiIWQlP5qsA_kitten3.jpg&quot;) no-repeat center;background-size:cover;"></ion-slide-page> -->
-          </ion-slides>
-          <section style="margin-left: 10px;
-          float: left;
-          width: -webkit-fill-available;
-          margin-top: -20px;">
-            <div style="display: inline-flex;     height: fit-content;">
-               <button  class="button button-light button-block icon ion-ios-heart-outline" style="
-               width: fit-content;"></button>
-                <button class="button button-light button-block icon ion-ios-chatbubble-outline" style="
-                width: fit-content;"></button>
+            <ion-item class="item-avatar" id="home-list11" style="    border-bottom: none;">
+              <img ng-src='https://avataaars.io/{{p.user[0].avatar}}'>
+              <h2>{{p.user[0].username}}</h2>
+              <p>{{p.status}}</p>
+            </ion-item>
+              <ion-slides disable-side-menu-drag="" options="{'loop': true}" slider="slider3" delegate-handle="slider3" id="home-slider3" style="width:100%;height:200px;">
+                  <ion-slide-page id="home-slide213" ng-if="p.image_done" style="background:url(http://lantang.herokuapp.com/img/{{p.image_done}}.jpeg) no-repeat center;background-size:cover;">
+                  </ion-slide-page>
+                <ion-slide-page id="home-slide213" style="background:url(http://lantang.herokuapp.com/img/{{p.image}}.jpeg) no-repeat center;background-size:cover;">
+                
+                </ion-slide-page>
+                 <!-- <ion-slide-page id="home-slide214" style="background:url(&quot;img/gHd5vedGQJu4s4qsPQvr_kitten2.jpg&quot;) no-repeat center;background-size:cover;"></ion-slide-page>
+                <ion-slide-page id="home-slide215" style="background:url(&quot;img/WE6rB9dZRTiIWQlP5qsA_kitten3.jpg&quot;) no-repeat center;background-size:cover;"></ion-slide-page> -->
+              </ion-slides>
+              <section style="margin-left: 10px;
+              float: left;
+              width: -webkit-fill-available;
+              margin-top: -20px;">
+                <div style="display: inline-flex;     height: fit-content;">
+                   <button  class="button button-light button-block icon ion-ios-heart-outline" style="
+                   width: fit-content;"></button>
+                    <button class="button button-light button-block icon ion-ios-chatbubble-outline" style="
+                    width: fit-content;"></button>
+                </div>
+                <h6 ng-if="p.like.length">1 Like</h6>
+                <h6 ng-if="!p.like.length">&nbsp;</h6>
+                <p style="margin-top:-9px; font-size:13px;">{{p.description}}</p>
+                <p style="margin-top:-9px; font-size:13px;" ng-if="p.description_done"><b>Jawaban : </b> {{p.description_done}}</p>
+                <!-- <p style="margin-top:-9px;">Komentar</p>
+                <p style="margin-top:-9px; font-size:12px;">adw</p> -->
+                <p></p>
+              </section>
             </div>
-            <h6 ng-if="p.like.length">1 Like</h6>
-            <h6 ng-if="!p.like.length">&nbsp;</h6>
-            <p style="margin-top:-9px; font-size:13px;">{{p.description}}</p>
-            <!-- <p style="margin-top:-9px;">Komentar</p>
-            <p style="margin-top:-9px; font-size:12px;">adw</p> -->
-            <p></p>
-          </section>
-        </div>
-        <div class="spacer" style="height: 200px;"></div>
+        <div class="spacer" style="height:400px;"></div>
       </div>
     <div id="profil-button-bar6" class="button-bar footer shadow">
       <a ui-sref="home()" id="profil-button20" class="button button-light button-block icon ion-android-home"></a>

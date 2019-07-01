@@ -7,6 +7,18 @@
 
     
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script>
+    function imgError(image) {
+    image.onerror = "";
+    image.src = "img/loader.gif";
+    return true;
+}
+function imgErrorP(image) {
+    image.onerror = "";
+    image.src = "img/gears.gif";
+    return true;
+}
+</script>
     
     <script src="lib/ionic/js/ionic.bundle.js"></script>
 
@@ -20,6 +32,9 @@
     <link href="css/ionic.app.css" rel="stylesheet">
 
     <style type="text/css">
+    .swiper-slide{
+      background-color: #f8f8f8 !important;
+    }
       .footer {
   position: fixed;
   left: 0;

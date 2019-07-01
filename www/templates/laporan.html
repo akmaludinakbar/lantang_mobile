@@ -1,15 +1,21 @@
 <ion-view title="laporan" id="page12">
-  <ion-content padding="false" scroll="false" class="has-header">
+  <ion-content padding="false"  class="has-header">
     <ion-list id="laporan-list16">
-      <ion-item class="item-thumbnail-left item-icon-right" id="laporan-list-item14" ui-sref="page()">
-        <h2>50 min ago</h2>
-        <p style="white-space:normal;">Kerusakan hutan kota batang karena kurangnya perhatian dari pemkot kota d</p>
+        <div id="home-container12" class="card-scroll" >
+      <ion-item class="item-thumbnail-left item-icon-right" id="laporan-list-item14"  ng-repeat="p in post"   ng-if="p.status!='Selesai'" ng-click="lapor(p)"> 
+          <img ng-src='http://lantang.herokuapp.com/img/{{p.image}}.jpeg' onerror="imgError(this);">
+          <p style="white-space:normal;" ng-if="p.user[0].username">dikirim oleh {{p.user[0].username}}</p>
+          <h2>{{cdate(p.date)}}</h2>
+        <p style="white-space:normal;">{{p.status}}</p>
         <i class="icon ion-android-arrow-dropright"></i>
+        {{p.description}}
       </ion-item>
+      </div>
     </ion-list>
-    <div id="laporan-button-bar8" class="button-bar footer shadow">
+ 
+  </ion-content>
+  <div id="laporan-button-bar8" class="button-bar footer shadow">
       <a ui-sref="admin()" id="laporan-button55" class="button button-positive button-block icon ion-ios-home-outline"></a>
       <button id="laporan-button57" class="button button-light button-block icon ion-alert"></button>
     </div>
-  </ion-content>
 </ion-view>
