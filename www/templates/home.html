@@ -10,15 +10,15 @@
         <h2>{{p.user[0].username}}</h2>
         <p>{{p.status}}</p>
       </ion-item>
-        <ion-slides disable-side-menu-drag="" options="{'loop': true}" slider="slider3" delegate-handle="slider3" id="home-slider3" style="width:100%;height:200px;">
-            <ion-slide-page id="home-slide213" ng-if="p.image_done" style="background:url(http://lantang.herokuapp.com/img/{{p.image_done}}.jpeg) no-repeat center;background-size:cover;">
-            </ion-slide-page>
-          <ion-slide-page id="home-slide213" style="background:url(http://lantang.herokuapp.com/img/{{p.image}}.jpeg) no-repeat center;background-size:cover;">
-          
-          </ion-slide-page>
-           <!-- <ion-slide-page id="home-slide214" style="background:url(&quot;img/gHd5vedGQJu4s4qsPQvr_kitten2.jpg&quot;) no-repeat center;background-size:cover;"></ion-slide-page>
-          <ion-slide-page id="home-slide215" style="background:url(&quot;img/WE6rB9dZRTiIWQlP5qsA_kitten3.jpg&quot;) no-repeat center;background-size:cover;"></ion-slide-page> -->
-        </ion-slides>
+      <ion-slides disable-side-menu-drag="" options="{'loop': true}" slider="slider3" delegate-handle="slider3" id="home-slider3" style="width:100%;height:200px;">
+        <ion-slide-page id="home-slide213" ng-if="p.image_done.length" style="background:url({{p.image_done[5].source}}}) no-repeat center;background-size:cover;">
+        </ion-slide-page>
+      <ion-slide-page id="home-slide213" style="background:url({{p.image[5].source}}) no-repeat center;background-size:cover;">
+      
+      </ion-slide-page>
+       <!-- <ion-slide-page id="home-slide214" style="background:url(&quot;img/gHd5vedGQJu4s4qsPQvr_kitten2.jpg&quot;) no-repeat center;background-size:cover;"></ion-slide-page>
+      <ion-slide-page id="home-slide215" style="background:url(&quot;img/WE6rB9dZRTiIWQlP5qsA_kitten3.jpg&quot;) no-repeat center;background-size:cover;"></ion-slide-page> -->
+    </ion-slides>
         <section style="margin-left: 10px;
         float: left;
         width: -webkit-fill-available;
