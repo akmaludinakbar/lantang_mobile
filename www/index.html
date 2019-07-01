@@ -246,24 +246,6 @@ td, th, tr {
     
     <script src="js/directives.js"></script>
     <script src="js/services.js"></script>
-    <script>
-      document.addEventListener("deviceready", onDeviceReady, false);
-      function onDeviceReady() {
-        document.addEventListener("backbutton", function(e){
-              if(false){
-                  e.preventDefault();
-              }
-              else {
-                  if (confirm("Are you sure you want to logout?")) {
-                      /* Here is where my AJAX code for logging off goes */
-                  }
-                  else {
-                      return false;
-                  }
-              }
-          }, false);
-      }
-    </script>
 
     <!-- Only required for Tab projects w/ pages in multiple tabs 
     <script src="lib/ionicuirouter/ionicUIRouter.js"></script>
