@@ -31,11 +31,13 @@
           </div>
           <h6 ng-if="p.like.length">1 Like</h6>
           <h6 ng-if="!p.like.length">&nbsp;</h6>
-          <p style="margin-top:-9px; font-size:13px;">{{p.description}}</p>
+          <p style="margin-top:-9px; font-size:13px;"><b style="color: #524d4d;">{{p.user[0].username}}</b> {{p.description}}</p>
           <p style="margin-top:-9px; font-size:13px;" ng-if="p.description_done"><b>Jawaban : </b> {{p.description_done}}</p>
+          <p style="text-align:left; color: grey; font-size: 12px; margin-top: -12px;">Lihat 0 komentar lainnya </p>
+       
           <!-- <p style="margin-top:-9px;">Komentar</p>
           <p style="margin-top:-9px; font-size:12px;">adw</p> -->
-          <p></p>
+         
         </section>
       </div>
       <div class="spacer" style="height: 200px;"></div>
