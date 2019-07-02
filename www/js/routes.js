@@ -248,7 +248,12 @@ angular.module('app.routes', [])
     templateUrl: 'templates/page2.html',
     controller: 'page2Ctrl'
   })
-
+  .state('komentar', {
+    url: '/komentar',
+    templateUrl: 'templates/komentar.html',
+    controller: 'komentarCtrl'
+  })
+  
 $urlRouterProvider.otherwise('/login')
 
 

@@ -58,7 +58,7 @@ padding-left:20px;">
           </div>
           <h6 ng-if="p.like.length">1 Like</h6>
           <h6 ng-if="!p.like.length">&nbsp;</h6>
-          <p style="margin-top:-9px; font-size:13px;">{{p.description}}</p>
+          <p style="margin-top:-9px; font-size:13px;"><b style="color: #524d4d;">{{p.user[0].username}}</b>{{p.description}}</p>
           <p style="margin-top:-9px; font-size:13px;" ng-if="p.description_done"><b>Jawaban : </b> {{p.description_done}}</p>
           <!-- <p style="margin-top:-9px;">Komentar</p>
           <p style="margin-top:-9px; font-size:12px;">adw</p> -->
@@ -68,9 +68,9 @@ padding-left:20px;">
       <div class="spacer" style="height: 400px;"></div>
     </div>
     <div id="profil-button-bar6" class="button-bar footer shadow">
-      <a ui-sref="home()" id="profil-button20" class="button button-light button-block icon ion-android-home"></a>
-      <a ui-sref="laporkan()" id="profil-button30" class="button button-light button-block icon ion-android-add-circle"></a>
-      <button id="profil-button28" class="button button-light button-block icon ion-android-person"></button>
+      <a ui-sref="home()" id="profil-button20" style="margin-top: 0px;"  class="button button-light button-block icon ion-android-home"></a>
+      <a ui-sref="laporkan()" id="profil-button30" style="margin-top: 0px;" class="button button-light button-block icon ion-android-add-circle"></a>
+      <button id="profil-button28" style="margin-top: 0px;"  class="button button-light button-block icon ion-android-person"></button>
     </div>
   </ion-content>
 </ion-view>

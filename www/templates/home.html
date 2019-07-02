@@ -2,8 +2,8 @@
     <ion-nav-buttons side="left">
         <a ng-click="camera()"  class="button button-clear icon ion-ios-camera"></a>
   </ion-nav-buttons>
-  <ion-content padding="false" scroll="false"></ion-content>
-    <div id="home-container12" class="card-scroll" >
+  <ion-content padding="false" scroll="false" class="has-header">
+    <div id="home-container12" class="card-scroll">
       <div id="home-container5" ng-repeat="p in post">
       <ion-item class="item-avatar" id="home-list11" style="    border-bottom: none;">
         <img ng-src='https://avataaars.io/{{p.user[0].avatar}}'>
@@ -23,28 +23,30 @@
         float: left;
         width: -webkit-fill-available;
         margin-top: -20px;">
-          <div style="display: inline-flex;     height: fit-content;">
-             <button ng-click="like()"  class="button button-light button-block icon ion-ios-heart-outline" style="
-             width: fit-content;"></button>
-              <button class="button button-light button-block icon ion-ios-chatbubble-outline" style="
-              width: fit-content;"></button>
-          </div>
+              <div style="display: inline-flex;     height: fit-content;">
+                  <button  class="button button-light button-block icon ion-ios-heart-outline" style="
+                  width: fit-content;"></button>
+                   <button ng-click="comment(p)" class="button button-light button-block icon ion-ios-chatbubble-outline" style="
+                   width: fit-content;"></button>
+               </div>
           <h6 ng-if="p.like.length">1 Like</h6>
           <h6 ng-if="!p.like.length">&nbsp;</h6>
-          <p style="margin-top:-9px; font-size:13px;">{{p.description}}</p>
+          <p style="margin-top:-9px; font-size:13px;"><b style="color: #524d4d;">{{p.user[0].username}}</b> {{p.description}}</p>
           <p style="margin-top:-9px; font-size:13px;" ng-if="p.description_done"><b>Jawaban : </b> {{p.description_done}}</p>
+          <p style="text-align:left; color: grey; font-size: 12px; margin-top: -12px;">Lihat 0 komentar lainnya </p>
+        
           <!-- <p style="margin-top:-9px;">Komentar</p>
           <p style="margin-top:-9px; font-size:12px;">adw</p> -->
-          <p></p>
+         
         </section>
       </div>
       <div class="spacer" style="height: 200px;"></div>
     </div>
     
     <div id="home-button-bar1" class="button-bar footer shadow">
-      <button id="home-button4" class="button button-light button-block icon ion-ios-home"></button>
-      <a ui-sref="laporkan()" id="home-button8" class="button button-light button-block icon ion-android-add-circle"></a>
-      <a ui-sref="profil()" id="home-button6" class="button button-light button-block icon ion-person"></a>
+      <button id="home-button4" style="margin-top: 0px;" class="button button-light button-block icon ion-ios-home"></button>
+      <a ui-sref="laporkan()" id="home-button8" style="margin-top: 0px;" class="button button-light button-block icon ion-android-add-circle"></a>
+      <a ui-sref="profil()" id="home-button6" style="margin-top: 0px;" class="button button-light button-block icon ion-person"></a>
     </div>
   </ion-content>
 </ion-view>
