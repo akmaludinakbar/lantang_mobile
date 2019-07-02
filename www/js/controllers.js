@@ -227,9 +227,6 @@ function ($scope, $stateParams,$http,$ionicPopup,	$ionicLoading) {
 		function onSuccess(imageData) {
 		  
 			post.image =  "data:image/jpeg;base64," + imageData;
-
-			
-			
 			setTimeout(function(){
 				location = "/#/laporkan2"
 			},0)
