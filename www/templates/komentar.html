@@ -1,0 +1,33 @@
+<ion-view title="komentar" id="page15" cache-view="false" >
+        <ion-content padding="false" scroll="false" class="has-header">
+          <ion-list id="komentar-list20">
+            <ion-item class="item-avatar" style="white-space: normal !important;    white-space: normal !important;
+            text-align: -webkit-left;
+            font-size: inherit;" id="komentar-list-item13">
+                <img ng-src='https://avataaars.io/{{postComment.user[0].avatar}}' onerror="imgErrorP(this);">
+                <h3>{{postComment.user[0].username}}</h3>
+              <div>{{postComment.description}}</div>
+              
+            </ion-item>
+            <ion-item class="item-avatar" id="komentar-list-item15" ng-repeat="c in comment">
+                <img ng-src='https://avataaars.io/{{c.user[0].avatar}}' onerror="imgErrorP(this);">
+                <h3>{{c.user[0].username}}</h3>
+                <p>{{c.description}}</p>
+            </ion-item>
+              <ion-item class="item-avatar footer" style="white-space: normal !important;    white-space: normal !important;
+              text-align: -webkit-left;width: -webkit-fill-available;   
+              font-size: inherit;" id="komentar-list-item13" >
+                  <img ng-src='https://avataaars.io/{{myAvatar}}' onerror="imgErrorP(this);">
+                <div><input id="myComment" class="input" style="width: -webkit-fill-available;border:none" placeholder="Masukkan komentar"></div>
+                <button ng-click="sendComment()" style="    position: absolute;
+                right: 20px;
+                bottom: 28px;    position: absolute;
+                right: 20px;
+                bottom: 28px;
+                border: none;
+                padding: 6px;
+                border-radius: 4px;">Kirim</button>
+              </ion-item>
+          </ion-list>
+        </ion-content>
+</ion-view>
