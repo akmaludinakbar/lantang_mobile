@@ -2,8 +2,8 @@
     <ion-nav-buttons side="left">
         <a ng-click="camera()"  class="button button-clear icon ion-ios-camera"></a>
   </ion-nav-buttons>
-  <ion-content padding="false" scroll="false"></ion-content>
-    <div id="home-container12" class="card-scroll" >
+  <ion-content padding="false" scroll="false" class="has-header">
+    <div id="home-container12" class="card-scroll">
       <div id="home-container5" ng-repeat="p in post">
       <ion-item class="item-avatar" id="home-list11" style="    border-bottom: none;">
         <img ng-src='https://avataaars.io/{{p.user[0].avatar}}'>
@@ -23,12 +23,12 @@
         float: left;
         width: -webkit-fill-available;
         margin-top: -20px;">
-          <div style="display: inline-flex;     height: fit-content;">
-             <button ng-click="like()"  class="button button-light button-block icon ion-ios-heart-outline" style="
-             width: fit-content;"></button>
-              <button class="button button-light button-block icon ion-ios-chatbubble-outline" style="
-              width: fit-content;"></button>
-          </div>
+              <div style="display: inline-flex;     height: fit-content;">
+                  <button  class="button button-light button-block icon ion-ios-heart-outline" style="
+                  width: fit-content;"></button>
+                   <button ng-click="comment(p)" class="button button-light button-block icon ion-ios-chatbubble-outline" style="
+                   width: fit-content;"></button>
+               </div>
           <h6 ng-if="p.like.length">1 Like</h6>
           <h6 ng-if="!p.like.length">&nbsp;</h6>
           <p style="margin-top:-9px; font-size:13px;"><b style="color: #524d4d;">{{p.user[0].username}}</b> {{p.description}}</p>

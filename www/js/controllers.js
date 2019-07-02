@@ -3,9 +3,9 @@ var post = {}
 var lapor = {}
 var postL = {}
 var user = {}
+var comment = {}
 
 var resizer = function(base64, maxWidth, maxHeight){
-
 
 	// Max size for thumbnail
 	  if(typeof(maxWidth) === 'undefined')  maxWidth = 500;
@@ -67,12 +67,119 @@ var loadL = function(a,b,image) {
 
 angular.module('app.controllers', [])
 
+.controller('komentarCtrl', ['$scope', '$stateParams','$http','$ionicPopup','$ionicLoading', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
+// You can include any angular dependencies as parameters for this function
+// TIP: Access Route Parameters for your page via $stateParams.parameterName
+function ($scope, $stateParams,$http,$ionicPopup,$ionicLoading) {
+
+
+	$scope.myAvatar = localStorage.getItem("avatar")
+	
+	$scope.getComment = function(){
+
+		$ionicLoading.show({
+			template: '<ion-spinner icon="spiral"></ion-spinner>',
+		});
+		$http({
+			method: "GET",
+			url: url+"/v1/comment/"+$scope.postComment._id,
+			data: {id_post: $scope.postComment._id, id_user: localStorage.getItem("id"), description: document.getElementById("myComment").value}
+		})
+		.success(function(data) {
+		
+			$scope.comment = data
+			for(x in $scope.comment){
+				if($scope.comment[x].user)
+				$scope.getDetailUser(x)
+			}
+
+		$ionicLoading.hide()
+		})
+		.error(function (errResponse, status) {
+			$ionicPopup.alert({
+					title: 'Tidak tersambung'
+			});
+
+		$ionicLoading.hide()
+		});
+	
+	}
+
+
+$scope.getDetailUser = function(index) {
+	
+	//$scope.comment[index].user = JSON.parse(localStorage.getItem("comment"+$scope.comment[index].id_user))
+	
+		
+	$ionicLoading.show({
+		template: '<ion-spinner icon="spiral"></ion-spinner>',
+	});
+	$http({
+		method: "GET",
+		url: url+"/v1/user/"+$scope.comment[index].id_user
+	})
+	.success(function(data) {
+		console.log(data)
+		//localStorage.setItem("comment"+$scope.comment[index].id_user,JSON.stringify(data))
+
+		$scope.comment[index].user = data
+
+		$ionicLoading.hide()
+	})
+	.error(function (errResponse, status) {
+		$ionicPopup.alert({
+				title: 'Tidak tersambung'
+		});
+
+		$ionicLoading.hide()
+	});
+}
+
+	
+	$scope.$on('$ionicView.enter', function () { 
+		$scope.postComment = JSON.parse(localStorage.getItem("post"))
+		
+		$scope.getComment();
+		$scope.sendComment = function() {
+			$ionicLoading.show({
+				template: '<ion-spinner icon="spiral"></ion-spinner>',
+			});
+
+			$http({
+				method: "POST",
+				url: url+"/v1/post/comment/",
+				data: {id_post: $scope.postComment._id, id_user: localStorage.getItem("id"), description: document.getElementById("myComment").value }
+			})
+			.success(function(data) {
+			
+				//$scope.comment = data
+				// if(data.status=="error")
+				// {
+				// 	$ionicPopup.alert({
+				// 		title: data.message
+				// 	});	
+				// }
+				$scope.getComment()
+
+				$ionicLoading.hide()
+			})
+			.error(function (errResponse, status) {
+				$ionicPopup.alert({
+						title: 'Tidak tersambung'
+				});
+				$ionicLoading.hide()
+			});
+		}
+	
+	});
+}])
+
 .controller('homeCtrl', ['$scope', '$stateParams','$http','$ionicPopup',	'$ionicLoading', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
 // You can include any angular dependencies as parameters for this function
 // TIP: Access Route Parameters for your page via $stateParams.parameterName
 function ($scope, $stateParams,$http,$ionicPopup,	$ionicLoading) {
 
-
+			
 	user.avatar = localStorage.getItem("avatar")
 	user.username = localStorage.getItem("username")
 	user.email = localStorage.getItem("email")
@@ -80,23 +187,6 @@ function ($scope, $stateParams,$http,$ionicPopup,	$ionicLoading) {
 	
 	$scope.user = user;
 	$scope.post = []
-
-	$scope.like=function(){
-		
-		$http({
-			method: "GET",
-			url: url+"/v1/user/"+$scope.post[index].id_user
-		})
-		.success(function(data) {
-		
-			$scope.post[index].user = data
-		})
-		.error(function (errResponse, status) {
-			$ionicPopup.alert({
-					title: 'Tidak tersambung'
-			});
-		});
-	}
 
 	$scope.decode = function(s){
 		return decodeURIComponent(s)
@@ -114,32 +204,23 @@ function ($scope, $stateParams,$http,$ionicPopup,	$ionicLoading) {
 
 	$scope.getDetailUser = function(index) {
 		
-		$scope.post[index].user = JSON.parse(localStorage.getItem($scope.post[index].id_user))
-		
-			
-		$ionicLoading.show({
-			template: '<ion-spinner icon="spiral"></ion-spinner>',
-		});
 		$http({
 			method: "GET",
 			url: url+"/v1/user/"+$scope.post[index].id_user
 		})
 		.success(function(data) {
-			
-			localStorage.setItem($scope.post[index].id_user,JSON.stringify(data))
-
+		
 			$scope.post[index].user = data
-
-			$ionicLoading.hide()
 		})
 		.error(function (errResponse, status) {
 			$ionicPopup.alert({
 					title: 'Tidak tersambung'
 			});
-
-			$ionicLoading.hide()
 		});
 	}
+
+	
+
 	$scope.camera = function(){
 
 
@@ -150,7 +231,7 @@ function ($scope, $stateParams,$http,$ionicPopup,	$ionicLoading) {
 			
 			
 			setTimeout(function(){
-				window.location = "/#/laporkan2"
+				location = "/#/laporkan2"
 			},0)
 		}
 
@@ -174,6 +255,7 @@ function ($scope, $stateParams,$http,$ionicPopup,	$ionicLoading) {
 
 	$scope.load = function(){
 		
+
 		$ionicLoading.show({
 			template: '<ion-spinner icon="spiral"></ion-spinner>',
 		});
@@ -186,9 +268,12 @@ function ($scope, $stateParams,$http,$ionicPopup,	$ionicLoading) {
 			$scope.post = data
 			console.log(data)
 			for(x in $scope.post){
+				if($scope.post[x].user)
 				$scope.getDetailUser(x)
 			}
+
 			$ionicLoading.hide()
+
 		})
 		.error(function (errResponse, status) {
 			$ionicPopup.alert({
@@ -196,6 +281,12 @@ function ($scope, $stateParams,$http,$ionicPopup,	$ionicLoading) {
 			});
 			$ionicLoading.hide()
 		});
+	}
+
+	$scope.comment = function(post)
+	{
+		localStorage.setItem("post",JSON.stringify(post))
+		location = "/#/komentar"
 	}
 
 	$scope.load()
@@ -272,7 +363,7 @@ function ($scope, $stateParams) {
 			post.image =  "data:image/jpeg;base64," + imageData;
 
 			setTimeout(function(){
-				window.location = "/#/laporkan2"
+				location = "/#/laporkan2"
 			},0)
 		}
 
@@ -297,7 +388,7 @@ function ($scope, $stateParams) {
 			post.image =  "data:image/jpeg;base64," + imageData;
 			
 			setTimeout(function(){
-				window.location = "/#/laporkan2"
+				location = "/#/laporkan2"
 			},0)
 		}
 
@@ -732,7 +823,7 @@ function ($scope, $stateParams) {
 
 	$scope.logout = function(){
 		localStorage.setItem('id',undefined)
-		window.location="/#/login"
+		location="/#/login"
 	}
 }])
    
@@ -794,7 +885,7 @@ function ($scope, $stateParams, $http,$ionicPopup,$ionicLoading) {
 			
 			
 			setTimeout(function(){
-				window.location = "/#/laporkan2"
+				location = "/#/laporkan2"
 			},0)
 		}
 
@@ -831,6 +922,7 @@ function ($scope, $stateParams, $http,$ionicPopup,$ionicLoading) {
 			$scope.post = data
 			console.log(data)
 			for(x in $scope.post){
+				if($scope.post[x].user)
 				$scope.getDetailUser(x)
 			}
 
@@ -838,11 +930,17 @@ function ($scope, $stateParams, $http,$ionicPopup,$ionicLoading) {
 
 		})
 		.error(function (errResponse, status) {
-		$ionicPopup.alert({
-				title: 'Tidak tersambung'
+			$ionicPopup.alert({
+					title: 'Tidak tersambung'
+			});
+			$ionicLoading.hide()
 		});
-		$ionicLoading.hide()
-		});
+	}
+
+	$scope.comment = function(post)
+	{
+		localStorage.setItem("post",JSON.stringify(post))
+		location = "/#/komentar"
 	}
 
 	$scope.load()
@@ -861,7 +959,7 @@ function ($scope, $stateParams,$http,$ionicPopup,$ionicLoading) {
 		localStorage.setItem("idlapor",lapor._id)
 		localStorage.setItem("glapor",JSON.stringify(lapor.image))
 		localStorage.setItem("klapor",lapor.description)
-		window.location = "/#/Admindetail"
+		location = "/#/Admindetail"
 	}
 
 
@@ -936,7 +1034,7 @@ function ($scope, $stateParams,$http,$ionicPopup,$ionicLoading) {
 			
 			
 			setTimeout(function(){
-				window.location = "/#/laporkan2"
+				location = "/#/laporkan2"
 			},0)
 		}
 
@@ -972,6 +1070,7 @@ function ($scope, $stateParams,$http,$ionicPopup,$ionicLoading) {
 			$scope.post = data
 			console.log(data)
 			for(x in $scope.post){
+				if($scope.post[x].user)
 				$scope.getDetailUser(x)
 			}
 			$ionicLoading.hide()
@@ -983,6 +1082,7 @@ function ($scope, $stateParams,$http,$ionicPopup,$ionicLoading) {
 		$ionicLoading.hide()
 		});
 	}
+
 
 	$scope.load()
 	
