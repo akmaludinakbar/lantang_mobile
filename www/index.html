@@ -4,9 +4,6 @@
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
     <title></title>
-
-    
-    <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <script>
     function imgError(image) {
     image.onerror = "";
@@ -246,24 +243,6 @@ td, th, tr {
     
     <script src="js/directives.js"></script>
     <script src="js/services.js"></script>
-    <script>
-      document.addEventListener("deviceready", onDeviceReady, false);
-      function onDeviceReady() {
-        document.addEventListener("backbutton", function(e){
-              if(false){
-                  e.preventDefault();
-              }
-              else {
-                  if (confirm("Are you sure you want to logout?")) {
-                      /* Here is where my AJAX code for logging off goes */
-                  }
-                  else {
-                      return false;
-                  }
-              }
-          }, false);
-      }
-    </script>
 
     <!-- Only required for Tab projects w/ pages in multiple tabs 
     <script src="lib/ionicuirouter/ionicUIRouter.js"></script>
