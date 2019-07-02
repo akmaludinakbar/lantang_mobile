@@ -67,12 +67,12 @@ var loadL = function(a,b,image) {
 
 angular.module('app.controllers', [])
 
-.controller('homeCtrl', ['$scope', '$stateParams','$http','$ionicPopup', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
+.controller('homeCtrl', ['$scope', '$stateParams','$http','$ionicPopup',	'$ionicLoading', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
 // You can include any angular dependencies as parameters for this function
 // TIP: Access Route Parameters for your page via $stateParams.parameterName
-function ($scope, $stateParams,$http,$ionicPopup) {
+function ($scope, $stateParams,$http,$ionicPopup,	$ionicLoading) {
 
-			
+
 	user.avatar = localStorage.getItem("avatar")
 	user.username = localStorage.getItem("username")
 	user.email = localStorage.getItem("email")
@@ -114,18 +114,30 @@ function ($scope, $stateParams,$http,$ionicPopup) {
 
 	$scope.getDetailUser = function(index) {
 		
+		$scope.post[index].user = JSON.parse(localStorage.getItem($scope.post[index].id_user))
+		
+			
+		$ionicLoading.show({
+			template: '<ion-spinner icon="spiral"></ion-spinner>',
+		});
 		$http({
 			method: "GET",
 			url: url+"/v1/user/"+$scope.post[index].id_user
 		})
 		.success(function(data) {
-		
+			
+			localStorage.setItem($scope.post[index].id_user,JSON.stringify(data))
+
 			$scope.post[index].user = data
+
+			$ionicLoading.hide()
 		})
 		.error(function (errResponse, status) {
 			$ionicPopup.alert({
 					title: 'Tidak tersambung'
 			});
+
+			$ionicLoading.hide()
 		});
 	}
 	$scope.camera = function(){
@@ -133,7 +145,7 @@ function ($scope, $stateParams,$http,$ionicPopup) {
 
 		function onSuccess(imageData) {
 		  
-			post.image =  resizer("data:image/jpeg;base64," + imageData);
+			post.image =  "data:image/jpeg;base64," + imageData;
 
 			
 			
@@ -162,6 +174,10 @@ function ($scope, $stateParams,$http,$ionicPopup) {
 
 	$scope.load = function(){
 		
+		$ionicLoading.show({
+			template: '<ion-spinner icon="spiral"></ion-spinner>',
+		});
+
 		$http({
 			method: "GET",
 			url: url+"/v1/post/"
@@ -172,11 +188,13 @@ function ($scope, $stateParams,$http,$ionicPopup) {
 			for(x in $scope.post){
 				$scope.getDetailUser(x)
 			}
+			$ionicLoading.hide()
 		})
 		.error(function (errResponse, status) {
-		$ionicPopup.alert({
-				title: 'Tidak tersambung'
-		});
+			$ionicPopup.alert({
+					title: 'Tidak tersambung'
+			});
+			$ionicLoading.hide()
 		});
 	}
 
@@ -246,7 +264,31 @@ function ($scope, $stateParams) {
 
 	$scope.requestAuthorization()
 
-	
+	$scope.getPhoto = function (source) {
+
+
+		function onSuccess(imageData) {
+		  
+			post.image =  "data:image/jpeg;base64," + imageData;
+
+			setTimeout(function(){
+				window.location = "/#/laporkan2"
+			},0)
+		}
+
+		console.log("tes")
+		function onFail(message) {
+		    alert('Failed because: ' + message);
+		}
+
+		// Retrieve image file location from specified source
+		navigator.camera.getPicture(onSuccess, onFail, { quality: 50,
+			sourceType: Camera.PictureSourceType.PHOTOLIBRARY, 
+			allowEdit: true,
+			destinationType: Camera.DestinationType.DATA_URL
+		});
+	}
+
 	$scope.camera = function(){
 
 
@@ -271,6 +313,7 @@ function ($scope, $stateParams) {
 
 		 console.log("camera clicked")
 		navigator.camera.getPicture(onSuccess, onFail, { quality: 25,
+			allowEdit: true,
 		    destinationType: Camera.DestinationType.DATA_URL
 		});
 	}
@@ -310,10 +353,10 @@ function ($scope, $stateParams) {
 
 }])
  
-.controller('lOGINCtrl', ['$scope', '$stateParams','$http','$ionicPopup', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
+.controller('lOGINCtrl', ['$scope', '$stateParams','$http','$ionicPopup','$ionicLoading', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
 // You can include any angular dependencies as parameters for this function
 // TIP: Access Route Parameters for your page via $stateParams.parameterName
-function ($scope, $stateParams,$http,$ionicPopup) {
+function ($scope, $stateParams,$http,$ionicPopup,$ionicLoading) {
 
 	$scope.user ={};
 
@@ -330,6 +373,12 @@ function ($scope, $stateParams,$http,$ionicPopup) {
 	}
 
 	$scope.login = function(){
+
+
+	$ionicLoading.show({
+		template: '<ion-spinner icon="spiral"></ion-spinner>',
+	});
+
 		$http({
 	        method: "POST",
 	        url: url+"/v1/login",
@@ -346,12 +395,17 @@ function ($scope, $stateParams,$http,$ionicPopup) {
 		  if(data.message=="login user")
 			  location.href = '/#/home'
 		  else if(data.message=="login admin")
-		      location.href = '/#/adminhome'
+			  location.href = '/#/adminhome'
+			  
+			  
+
+			$ionicLoading.hide()
 	    })
 	    .error(function (errResponse, status) {
 	       $ionicPopup.alert({
 	            title: 'Salah email atau password'
-	       });
+		   });
+		   $ionicLoading.hide()
 	    });
 	}
 
@@ -536,10 +590,10 @@ function ($scope, $stateParams) {
 
 }])
    
-.controller('laporkan3Ctrl', ['$scope', '$stateParams','$http', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
+.controller('laporkan3Ctrl', ['$scope', '$stateParams','$http','$ionicLoading', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
 // You can include any angular dependencies as parameters for this function
 // TIP: Access Route Parameters for your page via $stateParams.parameterName
-function ($scope, $stateParams,$http) {
+function ($scope, $stateParams,$http,$ionicLoading) {
 	
 	$scope.post = post;
 
@@ -552,19 +606,24 @@ function ($scope, $stateParams,$http) {
 		post.description = document.getElementById("isi").value
 		post.id_user = localStorage.getItem("id")
 
-		console.log(post)
+		$ionicLoading.show({
+			template: '<ion-spinner icon="spiral"></ion-spinner>',
+		});
+
 		$http({
 	        method: "POST",
 	        url: url+"/v1/post/add",
-	        data: JSON.stringify(post)
+			data: JSON.stringify(post)
 	    })
 	    .success(function(data) {
-	       location.href = '/#/home';
+		   location.href = '/#/profil';
+		   $ionicLoading.hide()
 	    })
 	    .error(function (errResponse, status) {
 	       $ionicPopup.alert({
 	            title: 'Terjadi kesalahan, coba kembali'
-	       });
+		   });
+		   $ionicLoading.hide()
 	    });
 	}
 	
@@ -602,10 +661,10 @@ function ($scope, $stateParams) {
 
 }])
    
-.controller('profilCtrl', ['$scope', '$stateParams','$http','$ionicPopup', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
+.controller('profilCtrl', ['$scope', '$stateParams','$http','$ionicPopup','$ionicLoading', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
 // You can include any angular dependencies as parameters for this function
 // TIP: Access Route Parameters for your page via $stateParams.parameterName
-function ($scope, $stateParams,$http,$ionicPopup) {
+function ($scope, $stateParams,$http,$ionicPopup,$ionicLoading) {
 
 
 	$scope.getStatus = function(s)
@@ -640,6 +699,10 @@ function ($scope, $stateParams,$http,$ionicPopup) {
 
 	$scope.load = function(){
 		
+		$ionicLoading.show({
+			template: '<ion-spinner icon="spiral"></ion-spinner>',
+		});
+
 		$http({
 			method: "GET",
 			url: url+"/v1/post_user/"+user.id
@@ -648,12 +711,13 @@ function ($scope, $stateParams,$http,$ionicPopup) {
 
 			console.log(data)
 			$scope.post = data
-		
+			$ionicLoading.hide()
 		})
 		.error(function (errResponse, status) {
-		$ionicPopup.alert({
-				title: 'Tidak tersambung'
-		});
+			$ionicPopup.alert({
+					title: 'Tidak tersambung'
+			});
+			$ionicLoading.hide()
 		});
 	}
 
@@ -672,10 +736,10 @@ function ($scope, $stateParams) {
 	}
 }])
    
-.controller('adminCtrl', ['$scope', '$stateParams', '$http','$ionicPopup',  // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
+.controller('adminCtrl', ['$scope', '$stateParams', '$http','$ionicPopup','$ionicLoading',  // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
 // You can include any angular dependencies as parameters for this function
 // TIP: Access Route Parameters for your page via $stateParams.parameterName
-function ($scope, $stateParams, $http,$ionicPopup) {
+function ($scope, $stateParams, $http,$ionicPopup,$ionicLoading) {
 
 
 			
@@ -717,12 +781,15 @@ function ($scope, $stateParams, $http,$ionicPopup) {
 			});
 		});
 	}
+
+	
+
 	$scope.camera = function(){
 
 
 		function onSuccess(imageData) {
 		  
-			post.image =  resizer("data:image/jpeg;base64," + imageData);
+			post.image =  "data:image/jpeg;base64," + imageData;
 
 			
 			
@@ -751,6 +818,11 @@ function ($scope, $stateParams, $http,$ionicPopup) {
 
 	$scope.load = function(){
 		
+
+		$ionicLoading.show({
+			template: '<ion-spinner icon="spiral"></ion-spinner>',
+		});
+
 		$http({
 			method: "GET",
 			url: url+"/v1/post/"
@@ -761,21 +833,25 @@ function ($scope, $stateParams, $http,$ionicPopup) {
 			for(x in $scope.post){
 				$scope.getDetailUser(x)
 			}
+
+			$ionicLoading.hide()
+
 		})
 		.error(function (errResponse, status) {
 		$ionicPopup.alert({
 				title: 'Tidak tersambung'
 		});
+		$ionicLoading.hide()
 		});
 	}
 
 	$scope.load()
 }])
    
-.controller('laporanCtrl', ['$scope', '$stateParams','$http','$ionicPopup', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
+.controller('laporanCtrl', ['$scope', '$stateParams','$http','$ionicPopup','$ionicLoading', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
 // You can include any angular dependencies as parameters for this function
 // TIP: Access Route Parameters for your page via $stateParams.parameterName
-function ($scope, $stateParams,$http,$ionicPopup) {
+function ($scope, $stateParams,$http,$ionicPopup,$ionicLoading) {
 
 
 	
@@ -829,6 +905,10 @@ function ($scope, $stateParams,$http,$ionicPopup) {
 
 	$scope.getDetailUser = function(index) {
 		
+		$ionicLoading.show({
+			template: '<ion-spinner icon="spiral"></ion-spinner>',
+		});
+
 		$http({
 			method: "GET",
 			url: url+"/v1/user/"+$scope.post[index].id_user
@@ -836,11 +916,14 @@ function ($scope, $stateParams,$http,$ionicPopup) {
 		.success(function(data) {
 		
 			$scope.post[index].user = data
+
+			$ionicLoading.hide()
 		})
 		.error(function (errResponse, status) {
 			$ionicPopup.alert({
 					title: 'Tidak tersambung'
 			});
+			$ionicLoading.hide()
 		});
 	}
 	$scope.camera = function(){
@@ -848,7 +931,7 @@ function ($scope, $stateParams,$http,$ionicPopup) {
 
 		function onSuccess(imageData) {
 		  
-			post.image =  resizer("data:image/jpeg;base64," + imageData);
+			post.image =  "data:image/jpeg;base64," + imageData;
 
 			
 			
@@ -877,6 +960,10 @@ function ($scope, $stateParams,$http,$ionicPopup) {
 
 	$scope.load = function(){
 		
+		$ionicLoading.show({
+			template: '<ion-spinner icon="spiral"></ion-spinner>',
+		});
+
 		$http({
 			method: "GET",
 			url: url+"/v1/post/"
@@ -887,11 +974,13 @@ function ($scope, $stateParams,$http,$ionicPopup) {
 			for(x in $scope.post){
 				$scope.getDetailUser(x)
 			}
+			$ionicLoading.hide()
 		})
 		.error(function (errResponse, status) {
 		$ionicPopup.alert({
 				title: 'Tidak tersambung'
 		});
+		$ionicLoading.hide()
 		});
 	}
 
@@ -967,10 +1056,10 @@ function ($scope, $stateParams, $ionicPopup,$http) {
 
 }])
    
-.controller('page2Ctrl', ['$scope', '$stateParams','$ionicPopup','$http', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
+.controller('page2Ctrl', ['$scope', '$stateParams','$ionicPopup','$http','$ionicLoading', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
 // You can include any angular dependencies as parameters for this function
 // TIP: Access Route Parameters for your page via $stateParams.parameterName
-function ($scope, $stateParams, $ionicPopup,$http) {
+function ($scope, $stateParams, $ionicPopup,$http,$ionicLoading) {
 
 
 	$scope.$on('$ionicView.enter', function () { 
@@ -981,20 +1070,44 @@ function ($scope, $stateParams, $ionicPopup,$http) {
 	$scope.upload = function(){
 
 		postL.description_done = document.getElementById("isi").value
-
+		$ionicLoading.show({
+			template: '<ion-spinner icon="spiral"></ion-spinner>',
+		});
 		$http({
 	        method: "PUT",
 	        url: url+"/v1/post/done/"+localStorage.getItem("idlapor"),
 	        data: JSON.stringify(postL)
 	    })
 	    .success(function(data) {
-	       location.href = '/#/laporanadmin';
+		   location.href = '/#/laporanadmin';
+		   $ionicLoading.hide()
 	    })
 	    .error(function (errResponse, status) {
 	       $ionicPopup.alert({
 	            title: 'Terjadi kesalahan, coba kembali'
-	       });
+		   });
+		   $ionicLoading.hide()
 	    });
+	}
+
+	$scope.getPhoto = function (source) {
+
+		function onSuccess(imageData) {
+		  
+			loadL('myImage3','icon-gambar3',"data:image/jpeg;base64," + imageData)
+
+		}
+
+		function onFail(message) {
+		    alert('Failed because: ' + message);
+		}
+
+		// Retrieve image file location from specified source
+		navigator.camera.getPicture(onSuccess, onFail, { quality: 50,
+			sourceType: Camera.PictureSourceType.PHOTOLIBRARY, 
+			allowEdit: true,
+			destinationType: Camera.DestinationType.DATA_URL
+		});
 	}
 
 	$scope.camera = function(){
