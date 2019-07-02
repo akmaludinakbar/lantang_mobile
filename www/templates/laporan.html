@@ -3,7 +3,7 @@
     <ion-list id="laporan-list16">
         <div id="home-container12" class="card-scroll" >
       <ion-item class="item-thumbnail-left item-icon-right" id="laporan-list-item14"  ng-repeat="p in post"   ng-if="p.status!='Selesai'" ng-click="lapor(p)"> 
-          <img ng-src='http://lantang.herokuapp.com/img/{{p.image}}.jpeg' onerror="imgError(this);">
+          <img ng-src='{{p.image[5].source}}' onerror="imgError(this);">
           <p style="white-space:normal;" ng-if="p.user[0].username">dikirim oleh {{p.user[0].username}}</p>
           <h2>{{cdate(p.date)}}</h2>
         <p style="white-space:normal;">{{p.status}}</p>

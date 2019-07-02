@@ -67,10 +67,10 @@ var loadL = function(a,b,image) {
 
 angular.module('app.controllers', [])
 
-.controller('homeCtrl', ['$scope', '$stateParams','$http', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
+.controller('homeCtrl', ['$scope', '$stateParams','$http','$ionicPopup', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
 // You can include any angular dependencies as parameters for this function
 // TIP: Access Route Parameters for your page via $stateParams.parameterName
-function ($scope, $stateParams,$http) {
+function ($scope, $stateParams,$http,$ionicPopup) {
 
 			
 	user.avatar = localStorage.getItem("avatar")
@@ -102,7 +102,7 @@ function ($scope, $stateParams,$http) {
 		return decodeURIComponent(s)
 	}
 	
-	if(localStorage.getItem("id")==undefined)
+	if(localStorage.getItem("id")=="undefined")
 	{
 		location.href = '/#/login';
 	}
@@ -315,11 +315,10 @@ function ($scope, $stateParams) {
 // TIP: Access Route Parameters for your page via $stateParams.parameterName
 function ($scope, $stateParams,$http,$ionicPopup) {
 
-	scope=$scope;
 	$scope.user ={};
 
 
-	if(localStorage.getItem("id"))
+	if(localStorage.getItem("id")!="undefined" && localStorage.getItem("id"))
 	{
 		if(localStorage.getItem("role")=="0"){
 			location.href = '/#/home';
@@ -497,8 +496,11 @@ function ($scope, $stateParams,$http,$ionicPopup) {
 		       });
 		   	  }
 		   	  else{
-		   	  	  localStorage.setItem("id",data.data.id)
-			      localStorage.setItem("email",data.data.id)
+				localStorage.setItem("id",data.data.id)
+				localStorage.setItem("username",data.data.username)
+				localStorage.setItem("avatar",data.data.avatar)
+				localStorage.setItem("email",data.data.id)
+				localStorage.setItem("role",data.data.role)
 			      location.href = '/#/home';
 		   	  }
 		
@@ -689,7 +691,7 @@ function ($scope, $stateParams, $http,$ionicPopup) {
 		return decodeURIComponent(s)
 	}
 	
-	if(localStorage.getItem("id")==undefined)
+	if(localStorage.getItem("id")=="undefined")
 	{
 		location.href = '/#/login';
 	}
@@ -781,7 +783,7 @@ function ($scope, $stateParams,$http,$ionicPopup) {
 		
 		lapor = l;
 		localStorage.setItem("idlapor",lapor._id)
-		localStorage.setItem("glapor",lapor.image)
+		localStorage.setItem("glapor",JSON.stringify(lapor.image))
 		localStorage.setItem("klapor",lapor.description)
 		window.location = "/#/Admindetail"
 	}
@@ -959,7 +961,7 @@ function ($scope, $stateParams, $ionicPopup,$http) {
 	
 	$scope.$on('$ionicView.enter', function () {
 		$scope.lapor = lapor;
-		$scope.lapor.image = 	localStorage.getItem("glapor")
+		$scope.lapor.image = 	JSON.parse(localStorage.getItem("glapor"));
 		$scope.lapor.description = 	localStorage.getItem("klapor");
 	});
 
